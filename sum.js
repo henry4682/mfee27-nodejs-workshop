@@ -1,5 +1,6 @@
 function sum(n){
-    console.log(n*(n+1)/2)
+    add=(n*(n+1)/2)
+    return add
 }
 
 console.log(sum(1)); // 1
