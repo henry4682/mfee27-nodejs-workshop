@@ -14,7 +14,7 @@ function sum3(n) {
     if (n === 1) {
         return n;
     }
-    return sum (n-1) + n;
+    return sum3 (n-1) + n;
 }
 
 console.log(sum1(1)); // 1
