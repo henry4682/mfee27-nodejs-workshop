@@ -61,7 +61,7 @@ function doWork(job, timer, cb) {
   doYourJob("coding",3000, function(err,data){
     if (err) {
         console.error('發生錯誤了', err);
-    } else {
-        console.log('執行成功:', data);
-    }
+        return;
+    } 
+    console.log('執行成功:', data);
 })
