@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let ary = [
+            {
+                id: 1,
+                type: 'A',
+                price: 100,
+            },
+            {
+                id: 2,
+                type: 'B',
+                price: 200,
+            },
+            {
+                id: 3,
+                type: 'A',
+                price: 150,
+            },
+        ];
+
+        // 用 for-loop
+
+        function filter(ary) {
+            let resultFilter = [];
+            for (let i = 0; i < ary.length; i++) {
+                if (ary[i].type === 'A') {
+                    resultFilter.push(ary[i]);
+                }
+            }
+            return resultFilter;
+        }
+        console.log("resultFilter = ", filter(ary));
+
+        function find(ary) {
+            let result2 = [];
+            for (let i = 0; i < ary.length; i++) {
+                if (ary[i].price >= '150') {
+                    result2.push(ary[i]);
+                }
+            }
+            return result2;
+        }
+        console.log("resultFind = ", find(ary));
+
+        function map(ary) {
+            let resultMap = [];
+            ary.forEach((ary) => {
+                let newPrice = ary.price * 2;
+                ary.price = newPrice;
+                resultMap.push(ary);
+            })
+            return resultMap;
+        }
+        console.log("resultMap = ",map(ary));
+
+        function reduce(ary) {
+            let reduceResult = 0
+            ary.forEach((ary) => {
+                let price = ary.price;
+                reduceResult += price;
+            })
+            return reduceResult;
+        }
+        console.log(reduce(ary));
+    </script>
+</body>
+
+</html>
