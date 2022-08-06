@@ -18,25 +18,50 @@ function doWork(job, timer, cb) {
   // 執行成功: 完成工作 吃早餐 at 2022-08-06T02:47:02.761Z
   // 執行成功: 完成工作 寫功課 at 2022-08-06T02:47:05.761Z
   doWork('刷牙', 3000, function (err, data) {
+    // 只有在這裡、當這個 callback 被呼叫的時候
+    // 才可以很確定這件事做完了
+    // 處理錯誤
     if (err) {
       console.error('發生錯誤了', err);
-    } else {
+      return;
+    }
+    // 正確就繼續
+    console.log('執行成功:', data);
+    doWork('吃早餐', 5000, function (err, data) {
+      if (err) {
+        console.error('發生錯誤了', err);
+        return;
+      }
       console.log('執行成功:', data);
-      doWork('吃早餐', 5000, function (err, data) {
+      doWork('寫功課', 3000, function (err, data) {
         if (err) {
           console.error('發生錯誤了', err);
-        } else {
-          console.log('執行成功:', data);
-          doWork('寫功課', 3000, function (err, data) {
-            if (err) {
-              console.error('發生錯誤了', err);
-            } else {
-              console.log('執行成功:', data);
-            }
-          });
+          return;
         }
+        console.log('執行成功:', data);
       });
-    }
+    });
   });
   
- 
+  
+//simplify version
+  function doYourJob(work, timer, callback) {
+    setTimeout(() => {
+        let dt = new Date();
+        
+        callback(null,`完成工作 ${work} at ${dt.toISOString()}` )
+
+        
+    }, timer);
+
+    let dt = new Date();
+    console.log(`開始工作 at ${dt.toISOString()}`)
+  }
+
+  doYourJob("coding",3000, function(err,data){
+    if (err) {
+        console.error('發生錯誤了', err);
+    } else {
+        console.log('執行成功:', data);
+    }
+})
