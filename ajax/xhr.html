@@ -39,11 +39,11 @@
       asyncBtn.addEventListener('click', function () {
         responseDom.innerText = '開始「非」同步請求';
         // TODO: 實作非同步請求
-        //用Promise包
+        
         var xhr = new XMLHttpRequest();
         
             xhr.addEventListener('load', function() {
-            
+            //用Promise包
             let xhrPromise = new Promise((resolve ,reject) => {
             if (xhr.status === 200) {
                 resolve(); 
@@ -51,6 +51,7 @@
                 reject();
             }
             });
+            
             let status = xhr.status
             xhrPromise.then((status) => {
                 responseDom.innerHTML = `非同步請求已回覆 ${xhr.responseText}`
