@@ -51,12 +51,12 @@
                 reject();
             }
             });
-            
-            let status = xhr.status
+
+            let status = xhr.status;
             xhrPromise.then((status) => {
-                responseDom.innerHTML = `非同步請求已回覆 ${xhr.responseText}`
+                responseDom.innerHTML = `非同步請求已回覆 ${xhr.responseText}`;
             }).catch((status) => {
-                responseDom.innerHTML = `非同步請求失敗, 狀態碼: ${xhr.status}`
+                responseDom.innerHTML = `非同步請求失敗, 狀態碼: ${xhr.status}`;
             })
         }) 
         
