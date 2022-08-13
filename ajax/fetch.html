@@ -1,8 +1,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>XHR</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>fetch</title>
   </head>
   <body>
     <button id="syncBtn">同步</button>
@@ -41,13 +40,16 @@
         responseDom.innerText = '開始「非」同步請求';
         // TODO: 實作非同步請求
         
-        $.ajax('http://54.71.133.152:3000',{method: 'GET'})
-         .done((data) => {
-            responseDom.innerHTML = `jQuery ${data}`
-         })
-         .fail((xhr, status) => {
-            responseDom.innerHTML = `jQuery ajax 失敗: ${status}`
-         })
+        fetch('http://54.71.133.152:3000')
+          .then(function (data) {
+            return response.text()
+          })
+          .then(function (data) {
+            responseDom.innerHTML = `Fetch 的結果: ${data}`
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       });
       
 

@@ -2,7 +2,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>XHR</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <button id="syncBtn">同步</button>
@@ -41,13 +40,22 @@
         responseDom.innerText = '開始「非」同步請求';
         // TODO: 實作非同步請求
         
-        $.ajax('http://54.71.133.152:3000',{method: 'GET'})
-         .done((data) => {
-            responseDom.innerHTML = `jQuery ${data}`
-         })
-         .fail((xhr, status) => {
-            responseDom.innerHTML = `jQuery ajax 失敗: ${status}`
-         })
+        var xhr = new XMLHttpRequest();
+        
+        xhr.addEventListener('load', function() {
+            if (xhr.status === 200) {
+                responseDom.innerHTML = `非同步請求已回覆 ${xhr.responseText}`;
+            } else {
+                responseDom.innerHTML = `非同步請求失敗, 狀態碼: ${xhr.status}`;
+            }
+        });
+        
+        xhr.onerror = function (event) {
+            responseDom.innerHTML = `XHR 非同步請求錯誤`;
+        }
+
+        xhr.open('GET', 'http://54.71.133.152:3000',true);
+        xhr.send();
       });
       
 
