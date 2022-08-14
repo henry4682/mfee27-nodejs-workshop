@@ -12,8 +12,5 @@ let queryDate = 20220814;
     console.log(response.data)
   } catch (e) {
     console.error(e);
-  })
-  
-  
-
-
+  };
+  )()
