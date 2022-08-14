@@ -13,4 +13,4 @@ let queryDate = 20220814;
   } catch (e) {
     console.error(e);
   };
-  )()
+})()
