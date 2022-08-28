@@ -16,19 +16,7 @@ app.use(cors())
 
 
 
-const mysql = require('mysql2')
-const { application }= require('express')
-let pool = mysql
-.createPool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  connectionLimit:10,
-  dateStrings:true,
-})
-.promise();
+const pool = require('./utils/db')
 
 
 
@@ -62,55 +50,10 @@ app.get('/', (req, res, next) => {
 
 
 //GET stocks
-app.get('/api/1.0/stocks', async(req,res,next) => {
-console.log('/api/1.0/stocks');
-  //寫法1:
-  
-  // let result = await pool.execute('SELECT * FROM stocks');
-  // let data = result[0]
-  
-  //寫法2:
+let stockRouter = require('./routers/stocks');
+app.use("/api/1.0/stocks",stockRouter);
 
-  let [data] = await pool.execute('SELECT * FROM stocks');
 
-  console.log('result', data)
-  
-  res.json(data);
-})
-
-app.get('/api/1.0/stocks/:stockId',async(req ,res ,next)=>{
-  const stockId=req.params.stockId
-
-  //去資料庫把資料撈出來
-  // let [data] = await pool.execute(`SELECT * FROM stock_prices WHERE stock_id=?`,[stockId]);
-   //  把取得的資料回覆給前端
-  
-
-   //分頁
-  let page= req.query.page || 1;
-  const perPage = 5
-  let [total]=await pool.execute('SELECT COUNT(*) AS total FROM stock_prices WHERE stock_id=? ',[stockId])
-
-  total=total[0].total
-
-  let lastPage = Math.ceil(total/perPage)
-
-  const offset = perPage * (page-1)
-
-  let [data] = await pool.execute('SELECT * FROM stock_prices WHERE stock_id =? ORDER BY date LIMIT ? OFFSET ?',[stockId,perPage,offset])
-  
-  res.json({
-    pagination:{
-      total,
-      perPage,
-      page,
-      lastPage
-    },
-    data,
-  });
-  
-  
-})
 
 app.get('/test', (req, res, next) => {
   console.log('這是test頁');
