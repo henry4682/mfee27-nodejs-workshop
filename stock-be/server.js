@@ -1,8 +1,9 @@
 const express = require('express');
 
+const app = express();
+
 require ('dotenv').config();
 
-const app = express();
 const port = process.env.SERVER_PORT || 3002 ;
 
 //對不同源的網址做連結或共享資料
@@ -18,6 +19,7 @@ app.use(cors())
 
 const pool = require('./utils/db')
 
+app.use(express.json())
 
 
 app.set('view engine', 'pug');
@@ -52,6 +54,9 @@ app.get('/', (req, res, next) => {
 //GET stocks
 let stockRouter = require('./routers/stocks');
 app.use("/api/1.0/stocks",stockRouter);
+
+let authRouter = require('./routers/auth')
+app.use(authRouter)
 
 
 
