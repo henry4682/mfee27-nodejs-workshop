@@ -30,6 +30,10 @@ app.use(express.json())
 app.set('view engine', 'pug');
 app.set('views','views')
 
+//設置靜態檔案
+const path =require('path')
+app.use(express.static(path.join(__dirname)))
+
 //測試不同源的
 app.get('/ssr',(req, res, next) => {
   res.render('index',{
@@ -61,7 +65,8 @@ app.get('/', (req, res, next) => {
 let stockRouter = require('./routers/stocks');
 app.use("/api/1.0/stocks",stockRouter);
 
-let authRouter = require('./routers/auth')
+let authRouter = require('./routers/auth');
+const { dirname } = require('path');
 app.use(authRouter)
 
 
