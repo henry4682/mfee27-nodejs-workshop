@@ -25,10 +25,7 @@ router.post('/api/1.0/auth/register', async (req, res, next) => {
         //有資料-->註冊過
         return res.status(400).json({message:'這個 email 已經註冊過'});
     }
-    //     TODO: 如果有，回覆 400 跟錯誤訊息
-    // TODO: 密碼要雜湊 hash
-    // TODO: 資料存到資料庫
-    // TODO: 回覆前端
+    
     // res.json(req.body)
 })
 
