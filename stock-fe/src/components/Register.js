@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try{
       let response = await axios.post(`${API_URL}/auth/register`,member);
-      console.log(response.data)
+      console.log("response.data",response.data)
       }catch(e){
         console.error("register", e)
       }

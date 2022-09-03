@@ -9,25 +9,31 @@ const port = process.env.SERVER_PORT || 3002 ;
 //對不同源的網址做連結或共享資料
 const cors = require('cors')
 
-// const corsOptions={
-//   origin:['http://localhost:3000']
-// }
 
+// const corsOptions={
+//代表只限定'http://localhost:3000'前台可以跨源
+//   origin:['http://localhost:3000']
+//若無限定則預設origin:"*" 代表對全域開放
+
+// }
+//若要使用 則app.use(cors(corsOptions))
 app.use(cors())
 
 
 
 const pool = require('./utils/db')
 
+//讓express 認得json
 app.use(express.json())
 
 
 app.set('view engine', 'pug');
 app.set('views','views')
 
-app.get('/ssr',(res, req, next) => {
+//測試不同源的
+app.get('/ssr',(req, res, next) => {
   res.render('index',{
-    stocks:['台積電','長榮航','聯發科'],
+    stocks: ['台積電', '長榮航', '聯發科'],
   })
 });
 
@@ -50,8 +56,8 @@ app.get('/', (req, res, next) => {
   res.send('Hello Express');
 });
 
-
-//GET stocks
+//API
+//GET stocks 的 資料
 let stockRouter = require('./routers/stocks');
 app.use("/api/1.0/stocks",stockRouter);
 
@@ -71,9 +77,11 @@ app.get('/ssr', (req, res, next) => {
   })
 });
 
+
+// 在之前所有路由中間件都沒接到response後會執行的
 app.use((req, res, next) => {
-  console.log('在所有路由中間件下面-> 404了!!')
   res.status(404).send('Not found 404')
+  console.log('在所有路由中間件下面-> 404了!!')
 })
 
 app.listen(port, () => {
